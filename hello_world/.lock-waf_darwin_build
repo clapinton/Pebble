@@ -1,0 +1,8 @@
+argv = ['/Users/clapinton/pebble-dev/PebbleSDK-2.2/Pebble/waf', 'configure', 'build']
+environ = {'TERM_SESSION_ID': '67D1161A-BC43-48C0-93E9-956977E1EA52', 'SSH_AUTH_SOCK': '/tmp/launch-mVulQs/Listeners', 'PYTHONPATH': '/Users/clapinton/pebble-dev/PebbleSDK-current/bin/../.env/lib/python2.7/site-packages', 'VERSIONER_PYTHON_PREFER_32_BIT': 'no', 'TERM_PROGRAM_VERSION': '326', 'SHELL': '/bin/bash', 'LOGNAME': 'clapinton', 'USER': 'clapinton', 'HOME': '/Users/clapinton', 'PATH': '/Users/clapinton/pebble-dev/PebbleSDK-2.2/arm-cs-tools/bin:/Users/clapinton/pebble-dev/PebbleSDK-current/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin', 'DISPLAY': '/tmp/launch-TdcGSV/org.macosforge.xquartz:0', 'TMPDIR': '/var/folders/t0/b3c2kyf56mq60gfz7kmw947r0000gn/T/', 'TERM_PROGRAM': 'Apple_Terminal', 'LANG': 'en_US.UTF-8', 'TERM': 'xterm-256color', 'Apple_PubSub_Socket_Render': '/tmp/launch-qYzsXh/Render', 'VERSIONER_PYTHON_VERSION': '2.7', 'SHLVL': '2', '__CF_USER_TEXT_ENCODING': '0x1F5:0:0', 'PWD': '/Volumes/CPT_HD/Google Drive/Pebble/Projects/hello_world', '_': '/Users/clapinton/pebble-dev/PebbleSDK-2.2/Pebble/waf', '__CHECKFIX1436934': '1'}
+files = ['/Volumes/CPT_HD/Google Drive/Pebble/Projects/hello_world/wscript']
+hash = 4672844372416070989
+options = {'files': '', 'jobs': 4, 'verbose': 0, 'nocache': False, 'progress_bar': 0, 'timestamp': None, 'distcheck_args': None, 'top': '', 'destdir': '', 'keep': 0, 'zones': '', 'debug': False, 'prefix': '/usr/local/', 'download': False, 'force': False, 'targets': '', 'out': ''}
+out_dir = '/Volumes/CPT_HD/Google Drive/Pebble/Projects/hello_world/build'
+run_dir = '/Volumes/CPT_HD/Google Drive/Pebble/Projects/hello_world'
+top_dir = '/Volumes/CPT_HD/Google Drive/Pebble/Projects/hello_world'
