@@ -1,4 +1,0 @@
-Pebble
-======
-
-For Pebble projects.
