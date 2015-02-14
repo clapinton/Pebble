@@ -1,21 +1,19 @@
 {
-  "uuid": "6cc4967f-a06e-4a00-bf46-8a326aceaf31",
-  "shortName": "Mockup Helper",
-  "longName": "Mockup Helper",
-  "companyName": "Pebble Technology",
-  "versionCode": 2,
-  "versionLabel": "2.0.0",
-  "watchapp": {
-    "watchface": false
-  },
-  "appKeys": {},
-  "resources": {
-    "media": [
-      {
-        "type": "png",
-        "name": "IMAGE_MOCKUP",
-        "file": "images/mockup.png"
-      }
-    ]
-  }
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "eric.olivetree@gmail.com",
+    "longName": "Exercise Timer",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "shortName": "Exercise Timer",
+    "uuid": "33ee9fcc-9972-4a7a-aa94-8b15b5e16a7e",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
 }
