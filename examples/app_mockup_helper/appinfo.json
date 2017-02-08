@@ -1,0 +1,19 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "eric.olivetree@gmail.com",
+    "longName": "Exercise Timer",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "shortName": "Exercise Timer",
+    "uuid": "33ee9fcc-9972-4a7a-aa94-8b15b5e16a7e",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
