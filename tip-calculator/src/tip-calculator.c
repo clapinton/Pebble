@@ -11,7 +11,7 @@ static GBitmap *action_icon_minus;
 
 static ActionBarLayer *action_bar;
 
-int dollars, cents, editValue = 0;
+int dollars, cents, editValue = 0;		/* Dollars and Cents take the value of the bill, entered on the first screen. */
 static int editDollar = 1;
 
 static char strValue[200]; /* This will receive the final text line, to be displayed on the screen. */
@@ -34,32 +34,88 @@ static void calculateValues() {
 
 	int billValue;
 	int tipValue[5];
-	int totalValue[5];	
-	char strLine[10] = "$";	
+	int totalValue[5];
+	int valueLen[3];		/* This will store the length of the value numbers, so we'll know where exactly to place the "," */	
+											/* 0 is for billValue; 1 is for tipValue; 2 is for totalValue. */
+	char strLine[10];
+	char *strBuffer = "0";
 
 
 	billValue = 100 * dollars + cents;
+/*	if (billValue >= 10000) {valueLen[0] = 5;}
+	else if (billValue >= 1000) {valueLen[0] = 4;}
+	else if (billValue >= 100) {valueLen[0] = 3;}		
+	else if (billValue >= 10) {valueLen[0] = 2;}
+	else if (billValue >= 1) {valueLen[0] = 1;}	
+*/	
 	
 	for (int i=0; i<=5; i++) {
 		tipValue[i] = (15+i) * billValue;
+
+		
 		totalValue[i] = billValue * (115+i);
+		if (totalValue[i] >= 10000000) {valueLen[2] = 8;}
+		else if (totalValue[i] >= 1000000) {valueLen[2] = 7;}
+		else if (totalValue[i] >= 100000) {valueLen[2] = 6;}
+		else if (totalValue[i] >= 10000) {valueLen[2] = 5;}				
+		else if (totalValue[i] >= 1000) {valueLen[2] = 4;}
+		else if (totalValue[i] >= 100) {valueLen[2] = 3;}		
+		else if (totalValue[i] >= 10) {valueLen[2] = 2;}
+		else {valueLen[2] = 1;}			
+
+	
+		
 /*	  snprintf(strLine, sizeof(strLine), "$%u,%u + %u", dollars, cents, 10+i, tipValue[i], totalValue[i]);	*/
-	  snprintf(strLine, sizeof(strLine), "%u,%u", dollars, cents);		   /* Prepare bill value. */
+/***** Prepare bill value for str. *****/
+	  snprintf(strLine, 7, "%u,%u", dollars, cents);
 		strcat(strValue, strLine);
-		strcat(strValue, " + "); 
-	  snprintf(strLine, sizeof(strLine), "%u", 15+i);		  /* Prepare tip amount. */
+		strcat(strValue, " + ");
+		
+/***** Prepare tip percentage for str. *****/		
+	  snprintf(strLine, 3, "%u", 15+i);
 		strcat(strValue, strLine);
 		strcat(strValue, "%: $");		
-	  snprintf(strLine, sizeof(strLine), "%u", tipValue[i]);		  /* Prepare tip value. */
+
+		if (tipValue[i] >= 1000000) {valueLen[1] = 7-4;}
+		else if (tipValue[i] >= 100000) {valueLen[1] = 6-4;}
+		else if (tipValue[i] >= 10000) {valueLen[1] = 5-4;}				
+		else if (tipValue[i] >= 1000) {valueLen[1] = 4;}
+		else if (tipValue[i] >= 100) {valueLen[1] = 3;}	
+		else if (tipValue[i] >= 10) {valueLen[1] = 2;}
+		else {valueLen[1] = 1;}	
+
+***** The lines above have to be modified. valueLen should store the comma Pos, so we are doing -4.
+***** The snippet below is to print something to the screen and check the value.
+***** Remove the snprintf below and uncomment the code that follows it. That is the one that should work.
+
+/*
+		snprintf(strBuffer, valueLen[1] + 1, "%u", tipValue[i]);
+		snprintf(strValue, 3, "%u", valueLen[2]);
+		strcat(strBuffer, "\0 \n");		
+		
+		text_layer_set_text(textValues, strBuffer);		
+*/	
+
+		snprintf(strLine, valueLen[1] + 4, "%u", tipValue[i]);
+	
+/*		snprintf(strBuffer, valueLen[1] + 1, "%u", tipValue[i]);
+	  strncpy(strLine, strBuffer, valueLen[1]);
+	  strLine[valueLen[1]] = '\0';
+	  strcat(strLine, ",");
+	  strcat(strLine, strBuffer + valueLen[1]);
+*/
 		strcat(strValue, strLine);
+		
 		strcat(strValue, " , $");
-	  snprintf(strLine, sizeof(strLine), "%u\n", totalValue[i]);		  /* Prepare total value. */
+		
+	  snprintf(strLine, valueLen[2] + 1, "%u", totalValue[i]);		  /* Prepare total value. Add 1 for /0 at the end. */
 		strcat(strValue, strLine);
+		strValue[strlen(strValue)] = '\n';	
+			
 		
 }		
 
 }
-
 
 static void displayResults() {
 
