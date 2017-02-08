@@ -1,0 +1,19 @@
+{
+  "uuid": "3f125461-a7df-43df-b06d-7290a66dd7bb",
+  "shortName": "ExTimer
+",
+  "longName": "ExTimer
+",
+  "companyName": "Clapinton",
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {
+    "dummy": 0
+  },
+  "resources": {
+    "media": []
+  }
+}
