@@ -1,9 +1,3 @@
-/*
-
-   Demonstrate how the timer feature works.
-
- */
-
 #include "pebble.h"
 
 static Window *windowMain;
