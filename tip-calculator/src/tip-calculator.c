@@ -8,6 +8,7 @@ static TextLayer *textValues;
 
 static GBitmap *action_icon_plus;
 static GBitmap *action_icon_minus;
+static GBitmap *action_icon_select;
 
 static ActionBarLayer *action_bar;
 
@@ -54,10 +55,10 @@ static void calculateValues() {
 
 		
 		totalValue[i] = billValue * (115+i);
-		if (totalValue[i] >= 10000000) {valueLen[2] = 8;}
-		else if (totalValue[i] >= 1000000) {valueLen[2] = 7;}
-		else if (totalValue[i] >= 100000) {valueLen[2] = 6;}
-		else if (totalValue[i] >= 10000) {valueLen[2] = 5;}				
+		if (totalValue[i] >= 10000000) {valueLen[2] = 8-4;}
+		else if (totalValue[i] >= 1000000) {valueLen[2] = 7-4;}
+		else if (totalValue[i] >= 100000) {valueLen[2] = 6-4;}
+		else if (totalValue[i] >= 10000) {valueLen[2] = 5-4;}				
 		else if (totalValue[i] >= 1000) {valueLen[2] = 4;}
 		else if (totalValue[i] >= 100) {valueLen[2] = 3;}		
 		else if (totalValue[i] >= 10) {valueLen[2] = 2;}
@@ -67,9 +68,9 @@ static void calculateValues() {
 		
 /*	  snprintf(strLine, sizeof(strLine), "$%u,%u + %u", dollars, cents, 10+i, tipValue[i], totalValue[i]);	*/
 /***** Prepare bill value for str. *****/
-	  snprintf(strLine, 7, "%u,%u", dollars, cents);
-		strcat(strValue, strLine);
-		strcat(strValue, " + ");
+// 	  snprintf(strLine, 7, "%u,%u", dollars, cents);
+// 		strcat(strValue, strLine);
+// 		strcat(strValue, " + ");
 		
 /***** Prepare tip percentage for str. *****/		
 	  snprintf(strLine, 3, "%u", 15+i);
@@ -84,32 +85,41 @@ static void calculateValues() {
 		else if (tipValue[i] >= 10) {valueLen[1] = 2;}
 		else {valueLen[1] = 1;}	
 
-***** The lines above have to be modified. valueLen should store the comma Pos, so we are doing -4.
+/***** The lines above have to be modified. valueLen should store the comma Pos, so we are doing -4.
 ***** The snippet below is to print something to the screen and check the value.
 ***** Remove the snprintf below and uncomment the code that follows it. That is the one that should work.
+*/
+    
 
-/*
-		snprintf(strBuffer, valueLen[1] + 1, "%u", tipValue[i]);
-		snprintf(strValue, 3, "%u", valueLen[2]);
-		strcat(strBuffer, "\0 \n");		
+// 		snprintf(strBuffer, valueLen[1] + 1, "%u", tipValue[i]);
+// 		snprintf(strValue, 3, "%u", valueLen[2]);
+// 		strcat(strBuffer, "\0 \n");		
 		
-		text_layer_set_text(textValues, strBuffer);		
-*/	
-
-		snprintf(strLine, valueLen[1] + 4, "%u", tipValue[i]);
+// 		text_layer_set_text(textValues, strBuffer);		
 	
-/*		snprintf(strBuffer, valueLen[1] + 1, "%u", tipValue[i]);
+
+// 		snprintf(strLine, valueLen[1] + 4, "%u", tipValue[i]);
+
+    
+		snprintf(strBuffer, valueLen[1] + 3, "%u", tipValue[i]);
 	  strncpy(strLine, strBuffer, valueLen[1]);
 	  strLine[valueLen[1]] = '\0';
 	  strcat(strLine, ",");
 	  strcat(strLine, strBuffer + valueLen[1]);
-*/
+
 		strcat(strValue, strLine);
 		
 		strcat(strValue, " , $");
 		
-	  snprintf(strLine, valueLen[2] + 1, "%u", totalValue[i]);		  /* Prepare total value. Add 1 for /0 at the end. */
+	  snprintf(strBuffer, valueLen[2] + 3, "%u", totalValue[i]);		  /* Prepare total value. Add 1 for /0 at the end. */
+// 		strcat(strValue, strLine);
+	  strncpy(strLine, strBuffer, valueLen[2]);
+	  strLine[valueLen[2]] = '\0';
+	  strcat(strLine, ",");
+	  strcat(strLine, strBuffer + valueLen[2]);
+
 		strcat(strValue, strLine);
+    
 		strValue[strlen(strValue)] = '\n';	
 			
 		
@@ -158,7 +168,7 @@ static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
 	
 	if (editDollar == 1) {
 		editDollar = 0;
-		action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, action_icon_plus);
+		action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, action_icon_select);
 	} else {
 		displayResults();
 	}
@@ -203,7 +213,7 @@ static void windowSet_load(Window *me) {
 /* Place icons on the Action Bar. */
   action_bar_layer_set_icon(action_bar, BUTTON_ID_UP, action_icon_plus);
   action_bar_layer_set_icon(action_bar, BUTTON_ID_DOWN, action_icon_minus);
-  action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, action_icon_minus);
+  action_bar_layer_set_icon(action_bar, BUTTON_ID_SELECT, action_icon_select);
 
   Layer *window_layer = window_get_root_layer(me);
   const int16_t width = layer_get_frame(window_layer).size.w - ACTION_BAR_WIDTH - 3;
@@ -237,6 +247,7 @@ static void init() {
 
   action_icon_plus = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_ACTION_ICON_PLUS);
   action_icon_minus = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_ACTION_ICON_MINUS);
+  action_icon_select = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_ACTION_ICON_SELECT);
 
   windowSet = window_create();		/*Remember to destroy every window that you create.*/
   window_set_window_handlers(windowSet, (WindowHandlers) {
@@ -254,7 +265,8 @@ static void deinit() {
   window_destroy(windowSet);		/* Dumps the parameter Window. Can be called while shown. All elements on it must be dumped before. */
 
   gbitmap_destroy(action_icon_plus);
-  gbitmap_destroy(action_icon_minus);  
+  gbitmap_destroy(action_icon_minus);
+  gbitmap_destroy(action_icon_select);
 }
 
 int main(void) {
